@@ -1,0 +1,117 @@
+<template name="client">
+	{{#unless usernameSet}}
+		{{#modal_wrapper}}
+		{{> name_popup}}
+		{{/modal_wrapper}}
+	{{/unless}}
+
+	{{> search_bar}}
+	<div class="ui main page grid">
+	<div class="row">
+	{{> yield}}
+	{{> yield "searchDoneButton"}}
+	</div>
+	</div>
+</template>
+
+<template name="searchDoneButton">
+<div class="ui primary fixed fluid button">Done</div>
+</template>
+
+<template name="playlist">	
+	{{#with currentTrack}}
+		<div class="ui basic segment">
+			<h4 class="ui green basic segment header">Now Playing</h4>
+		</div>
+		{{#playlist_wrapper}}
+		{{> track context=this}}
+		{{/playlist_wrapper}}
+		{{#if queuedTracksExist}}		
+		<div class="ui basic segment">
+			<h4 class="ui green basic segment header">Coming up</h4>
+		</div>		
+		{{#playlist_wrapper}}
+		{{#each queuedTracks}}
+		{{> track context=this}}
+		{{/each}}
+		{{/playlist_wrapper}}
+		{{/if}}
+	{{else}}
+		{{#centered_wrapper}}
+			<h1 class="ui disabled header"> <i>It's quiet here</i></h1>		
+		{{/centered_wrapper}}
+	{{/with}}
+</template>
+
+<template name="search">
+{{#playlist_wrapper addclass="searchList"}}
+	{{#each searchResults}}
+	{{> track icon="add circle" context=this}}
+	{{else}}
+	<h1 class="ui centered disabled header"> <i>Dang, nothing found!</i></h1>	
+
+	{{/each}}
+{{/playlist_wrapper}}
+</template>
+	
+<template name="modal_wrapper">
+	<div class="ui small modal">
+		{{> Template.contentBlock}}
+	</div>
+</template>
+
+<template name="name_popup">
+	<div class="header">
+		Enter a nickname
+	</div>
+	<div class="content">
+		<div class="ui fluid input">
+			<input type="text">
+		</div>	
+	</div>
+	<div class="ui bottom attached primary disabled button">Let's do this</div>
+</template>
+
+<template name="search_bar">
+	<div class="ui fixed menu navbar">
+		<div class="ui fluid action left icon input">
+			<i class="youtube play icon" style="color:#cd201f"></i>
+			<input id="searchbar" type="text" placeholder="Enter YouTube query">
+			<div class="ui small button"><i class="centered search icon"></i></div>
+		</div>
+	</div>
+</template>
+
+<template name="centered_wrapper">
+<div class="centered-horizon">
+	<div class="centered-content">
+		{{> Template.contentBlock}}
+	</div>
+</div>
+</template>
+
+<template name="playlist_wrapper">
+<div class="ui divided list {{addclass}}">
+	{{> Template.contentBlock}}
+</div>
+</template>
+
+
+<template name="track">
+<div class="item">
+<div>
+	<img class="ui tiny image" src="{{context.thumbnail}}">
+</div>
+<div class="content">
+	<div class="video-description">
+	<div class="header">{{context.title}}</div>
+	{{#if context.username}}
+	<div class="video-queuedby">Queued by: {{context.username}}</div>
+	{{/if}}
+	</div>
+</div>
+	{{#if checkIcon}}
+	<i class="large {{checkIcon}} link icon"></i>
+	{{/if}}
+</div>
+</template>

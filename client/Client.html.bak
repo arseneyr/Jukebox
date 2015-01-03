@@ -1,0 +1,58 @@
+<template name="client">
+	{{#unless username_set}}
+	<div class="ui small modal">
+		{{> name_popup}}
+	</div>
+	{{/unless}}
+
+	<div class="ui grid">
+		<div class="one column row">
+			<div class="column">
+				{{> search_menu}}
+			</div>
+		</div>
+	</div>
+	<div class="ui one column stackable center aligned page grid main">
+			<div class="column twelve wide padding-reset">
+				{{> playlist}}
+			</div>
+	</div>
+
+</template>
+
+<template name="name_popup">
+	<div class="header">
+		Enter a name
+	</div>
+	<div class="content">
+		<div class="ui fluid action input">
+			<input type="text">
+			<div class="ui button disabled">Let's do this</div>
+		</div>	
+	</div>
+</template>
+
+<template name="search_menu">
+			<div class="column">
+		<div class="ui fixed menu navbar page grid">	
+			<div class="ui fluid action input padding-reset">
+				<input type="text" placeholder="Enter YouTube query or URL">
+				<div class="ui button"><i class="red youtube play icon"></i>Search</div>
+			</div>
+			</div>
+		</div>
+</template>
+
+<template name="playlist">
+{{#if tracks.length}}
+<div class="ui segment">
+{{#each tracks}}
+<div class="ui vertical segment">
+	{{title}}
+</div>
+{{/each}}
+</div>
+{{else}}
+<h1 class="ui disabled header"><i>It's lonely in here. </i></h1>
+{{/if}}
+</template>

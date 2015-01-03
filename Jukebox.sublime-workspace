@@ -1,0 +1,638 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"pl",
+				"player	(?)"
+			],
+			[
+				"desto",
+				"destroypl(pl)"
+			],
+			[
+				"back",
+				"backupPlayer	(?)"
+			],
+			[
+				"dest",
+				"destroyPlayer()"
+			],
+			[
+				"bac",
+				"backup"
+			],
+			[
+				"wait",
+				"waitingForBackupPlayer"
+			],
+			[
+				"tra",
+				"trackId	(?)"
+			],
+			[
+				"remove",
+				"removeClass"
+			],
+			[
+				"waiting",
+				"waitingForPlayerReady"
+			],
+			[
+				"player",
+				"playerState"
+			],
+			[
+				"play",
+				"playerState"
+			],
+			[
+				"backup",
+				"backupPlayer	(?)"
+			],
+			[
+				"sub",
+				"subscribe"
+			],
+			[
+				"sea",
+				"searchDoneButton"
+			],
+			[
+				"ren",
+				"render"
+			],
+			[
+				"cl",
+				"client"
+			],
+			[
+				"pad",
+				"padding-left"
+			],
+			[
+				"mar",
+				"margin-top"
+			],
+			[
+				"paddi",
+				"padding-right"
+			],
+			[
+				"bord",
+				"border-bottom"
+			],
+			[
+				"padd",
+				"padding-left"
+			],
+			[
+				"table",
+				"table-cell"
+			],
+			[
+				"ta",
+				"table-row"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"max-",
+				"max-width"
+			],
+			[
+				"in",
+				"input"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "lib/Jukebox.js",
+			"settings":
+			{
+				"buffer_size": 40,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "client/Client.html",
+			"settings":
+			{
+				"buffer_size": 2674,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Client/client.js",
+			"settings":
+			{
+				"buffer_size": 3763,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Jukebox.html",
+			"settings":
+			{
+				"buffer_size": 402,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Client/player.js",
+			"settings":
+			{
+				"buffer_size": 5755,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Client/player.html",
+			"settings":
+			{
+				"buffer_size": 113,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Jukebox.css",
+			"settings":
+			{
+				"buffer_size": 1928,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Meteor.setInterval(function () {\n	Meteor.users.remove({createdAt: {$lt: new Date(Date.now() - 86400000)}});\n	}, 60000);\n\nAccounts.config({loginExpirationInDays: 1});\nAccounts.onCreateUser(function (options, user) {\n	if (/^bad motherfucker$/.test(user.username)) {\n		user.admin = true;\n	}\n\n	return user;\n});\nMeteor.publish(\"userData\", function() {\n	return Meteor.users.find({_id: this.userId, admin: true}, {fields: {'admin':1}});\n});\n\nTracks.allow({\n	insert: function (userId, doc) {\n		return true;\n	},\n\n	remove: function (userId, doc) {\n		return Meteor.user().username == 'yt-player' || \n			   Meteor.user().admin || \n			   doc.userId == userId;\n	}\n})\n\nTracks.before.insert(function (userId, doc) {\n	doc.createdAt = Date.now();\n	doc.username = Meteor.user().username;\n	doc.userId = userId;\n	doc.trackId = doc._id;\n	delete doc._id;\n});\n\nMeteor.publish('tracks', function() {\n	return Tracks.find({}, {\n		fields: {userId: 0}mjk89\n	});\n});\n\nMeteor.publish('myTracks', function() {\n	return Tracks.find({userId: this.userId}, {fields: {userId:1}});\n});\n\nMeteor.publish('search', function(query) {\n	var self = this;\n\n	HTTP.call('GET', 'https://www.googleapis.com/youtube/v3/search', {\n		params: {\n			part: 'snippet',\n			q: query,\n			type: 'video',\n			key: 'AIzaSyA7UOF4EcfZgMEzLkiiHtBmPE368_gguV0',\n			maxResults: 50,\n			fields: 'items(id/videoId, snippet(title,thumbnails/medium/url))'\n		}\n	}, function (error, result) {\n		if (error) {\n			return self.error(error);\n		}\n\n		result.data.items.map(function (i) {\n			self.added('searchResults', i.id.videoId, {title: i.snippet.title, thumbnail: i.snippet.thumbnails.medium.url});\n		});\n\n		self.ready();\n	});\n});",
+			"file": "server/server.js",
+			"file_size": 1715,
+			"file_write_time": 130644850571176902,
+			"settings":
+			{
+				"buffer_size": 1651,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 588.0,
+		"selected_items":
+		[
+			[
+				"au",
+				"Tag: Auto-Format Tags on Document"
+			],
+			[
+				"auto",
+				"Tag: Auto-Format Tags on Document"
+			],
+			[
+				"tag",
+				"Tag: Auto-Format Tags on Document"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"jshin",
+				"JSHint: Clear Annotations"
+			],
+			[
+				"packag",
+				"Package Control: Remove Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"ternj",
+				"TernJS: Reload"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 768.0
+	},
+	"console":
+	{
+		"height": 186.0,
+		"history":
+		[
+			"npm",
+			"where nodejs.exe",
+			"where nodejs",
+			"where node",
+			"where linter",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/Arseney/vagrant/Jukebox",
+		"/C/Users/Arseney/vagrant/Jukebox/Client",
+		"/C/Users/Arseney/vagrant/Jukebox/lib",
+		"/C/Users/Arseney/vagrant/Jukebox/public",
+		"/C/Users/Arseney/vagrant/Jukebox/server"
+	],
+	"file_history":
+	[
+		"/C/Users/Arseney/vagrant/Jukebox/Client/Client.html.bak",
+		"/C/Users/Arseney/vagrant/Jukebox/Client/client.js",
+		"/C/Users/Arseney/vagrant/Jukebox/Jukebox.html",
+		"/C/Users/Arseney/vagrant/Jukebox/client/Client.htm",
+		"/C/Users/Arseney/OneDrive/software/sublime 3/Data/Packages/JSHint Gutter/.jshintrc",
+		"/C/Users/Arseney/vagrant/Jukebox/Jukebox.sublime-project",
+		"/C/Users/Arseney/vagrant/Jukebox/Jukebox.js",
+		"/C/Users/Arseney/OneDrive/software/sublime 3/Data/Packages/User/Preferences.sublime-settings"
+	],
+	"find":
+	{
+		"height": 50.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"div",
+			"yt",
+			" {",
+			">\n",
+			"basic",
+			"Session",
+			"\n  ",
+			"Session",
+			"if",
+			"kflkfd",
+			"dfldmf",
+			"kflkfd",
+			"dfldmf",
+			"lkfd\ndfld",
+			"dfldmf",
+			"dsaf"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 4,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "lib/Jukebox.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 40,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"open_with_edit": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "client/Client.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2674,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								239,
+								239
+							]
+						],
+						"settings":
+						{
+							"is_xml": false,
+							"open_with_edit": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Client/client.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3763,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2743,
+								2743
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2139.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Jukebox.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 402,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								376,
+								376
+							]
+						],
+						"settings":
+						{
+							"is_xml": false,
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Client/player.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5755,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1064,
+								1064
+							]
+						],
+						"settings":
+						{
+							"open_with_edit": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 713.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Client/player.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 113,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								101,
+								101
+							]
+						],
+						"settings":
+						{
+							"is_xml": false,
+							"open_with_edit": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Jukebox.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1928,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1928,
+								1928
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1794.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "server/server.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1651,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1109,
+								1109
+							]
+						],
+						"settings":
+						{
+							"is_xml": false,
+							"open_with_edit": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 345.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 31.0
+	},
+	"input":
+	{
+		"height": 43.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "Jukebox.sublime-project",
+	"replace":
+	{
+		"height": 58.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 300.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
